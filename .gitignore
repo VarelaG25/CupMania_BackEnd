@@ -1,0 +1,73 @@
+# ====== Sistema ======
+.DS_Store
+Thumbs.db
+
+# ====== Logs ======
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ====== Dependencias ======
+node_modules/
+vendor/
+
+# ====== Builds ======
+dist/
+build/
+out/
+bin/
+obj/
+
+# ====== Archivos temporales ======
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# ====== Entornos ======
+.env
+.env.*
+!.env.example
+
+# ====== IDEs ======
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+*.csproj.user
+
+# VS Code
+.vscode/
+
+# JetBrains
+.idea/
+
+# ====== Archivos compilados ======
+*.dll
+*.exe
+*.class
+*.jar
+
+# ====== Archivos de sistema ======
+*.lock.json
+package-lock.json
+yarn.lock
+
+# ====== Subidas / archivos dinámicos ======
+uploads/
+public/uploads/
+
+# ====== Base de datos local ======
+*.sqlite
+*.db
+
+# ====== Coverage ======
+coverage/
+
+# ====== Otros ======
+*.bak
+*.old
