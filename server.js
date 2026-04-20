@@ -114,6 +114,68 @@ app.post("/api/chats", (req, res) => {
 io.on("connection", (socket) => {
   console.log("⚡ conectado:", socket.id);
 
+  socket.on("login_user", (data) => {
+    const { email, password } = data;
+
+    console.log("📥 login recibido:", email, password);
+
+    const sql = `
+      SELECT id, name, email, avatar
+      FROM users
+      WHERE email = ? AND password = ?
+    `;
+
+    db.get(sql, [email, password], (err, user) => {
+      if (err) {
+        console.error("❌ DB error:", err.message);
+
+        return socket.emit("login_response", {
+          success: false,
+          message: "Error en el servidor",
+        });
+      }
+
+      if (!user) {
+        return socket.emit("login_response", {
+          success: false,
+          message: "Credenciales incorrectas",
+        });
+      }
+
+      socket.emit("login_response", {
+        success: true,
+        user,
+      });
+    });
+  });
+
+  socket.on("register_user", (data) => {
+    const { id, name, email, password, avatar } = data;
+
+    console.log("📥 registro recibido:", data);
+
+    const sql = `
+    INSERT INTO users (id, name, email, password, avatar)
+    VALUES (?, ?, ?, ?, ?)
+  `;
+
+    db.run(sql, [id, name, email, password, avatar], function (err) {
+      if (err) {
+        console.error("❌ DB error:", err.message);
+
+        return socket.emit("register_response", {
+          success: false,
+          message: "Error al registrar usuario",
+        });
+      }
+
+      socket.emit("register_response", {
+        success: true,
+        message: "Usuario creado correctamente",
+      });
+    });
+  });
+
   // JOIN CHAT
   socket.on("join_chat", (chatId) => {
     socket.join(chatId);
